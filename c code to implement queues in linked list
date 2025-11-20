@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Queue {
+    struct Node* front;
+    struct Node* rear;  
+};
+struct Queue* createQueue() {
+    struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+    if (q == NULL) {
+        printf("Memory allocation failed for Queue.\n");
+        exit(EXIT_FAILURE);
+    }
+    q->front = NULL;
+    q->rear = NULL;
+    return q;
+}
+int isEmpty(struct Queue* q) {
+    return (q->front == NULL);
+}
+void enqueue(struct Queue* q, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed for new Node.\n");
+        exit(EXIT_FAILURE);
+    }
+    newNode->data = value;
+    newNode->next = NULL;
+    if (isEmpty(q)) {
+        q->front = newNode;
+        q->rear = newNode;
+    } else {
+        q->rear->next = newNode;
+        q->rear = newNode;
+    }
+    printf("%d enqueued to queue.\n", value);
+}
+int dequeue(struct Queue* q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1; 
+    }
+    struct Node* temp = q->front;
+    int dequeuedValue = temp->data;
+    q->front = q->front->next;
+
+    if (q->front == NULL) {
+        q->rear = NULL;
+    }
+    free(temp);
+    printf("%d dequeued from queue.\n", dequeuedValue);
+    return dequeuedValue;
+}
+int peek(struct Queue* q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty. No front element.\n");
+        return -1; 
+    }
+    return q->front->data;
+}
+void displayQueue(struct Queue* q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty.\n");
+        return;
+    }
+    struct Node* current = q->front;
+    printf("Queue elements: ");
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+int main() {
+    struct Queue* myQueue = createQueue();
+    enqueue(myQueue, 10);
+    enqueue(myQueue, 20);
+    enqueue(myQueue, 30);
+    displayQueue(myQueue);
+    printf("Front element: %d\n", peek(myQueue));
+    dequeue(myQueue);
+    displayQueue(myQueue);
+    dequeue(myQueue);
+    dequeue(myQueue);
+    displayQueue(myQueue);
+    dequeue(myQueue); 
+    free(myQueue); 
+    return 0;
+}
