@@ -1,0 +1,32 @@
+#include<stdio.h>
+int main()
+{
+    int a[10], i, sum = 0;
+    float avg;
+    int n; 
+    printf("\n enter the number of elements in the array (up to 10):\n");
+    scanf("%d", &n);
+    if (n > 10)
+    {
+        printf("\n Number of elements exceeds array capacity. Limiting to 10.\n");
+        n = 10;
+    }
+    printf("\n enter the array elements:\n");
+    for(i = 0; i < n; i++)
+    { 
+        scanf("%d", &a[i]); 
+    }
+    for(i = 0; i < n; i++)
+    { 
+        sum = sum + a[i];
+    }
+    if (n > 0) 
+    { 
+        avg = (float)sum / n; 
+        printf("Average of %d numbers is: %f\n", n, avg); 
+    } else
+    {
+        printf("Cannot calculate average for zero elements.\n");
+    }
+    return 0;
+}
