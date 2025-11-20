@@ -1,0 +1,25 @@
+#include<stdio.h>
+int main()
+{
+int i,j,key=0,a[i],n;
+printf("enter the number of array elements:");
+scanf("%d,&n");
+{
+printf("enter the array elements:");
+scanf("%d,&a[i]");
+}
+for(i=1;i<n;i++)
+{
+    key=a[i];
+    j=i-1;
+while(j>=0 && a[j]>key)
+{
+a[j+1]=a[j];
+j=j-1;
+}
+a[j+1]=key;
+a[j]=key;
+}
+printf("found key at:");
+return 0;
+}
