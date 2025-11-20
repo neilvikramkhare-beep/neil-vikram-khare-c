@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main() 
+{
+    int nodes, edges = 0, choice;
+    printf("Enter number of nodes: ");
+    scanf("%d", &nodes);
+    int adjMatrix[nodes][nodes];
+    int *adjList[nodes];
+    int listSize[nodes];
+    for(int i = 0; i < nodes; i++) {
+        for(int j = 0; j < nodes; j++)
+            adjMatrix[i][j] = 0;
+
+        adjList[i] = (int*)malloc(nodes * sizeof(int));
+        listSize[i] = 0;
+    }
+    do
+     {
+        printf("\n===== GRAPH MENU =====\n");
+        printf("1. Enter Edges (Only Once)\n");
+        printf("2. Display Adjacency Matrix\n");
+        printf("3. Display Adjacency List\n");
+        printf("4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        switch(choice) 
+        {
+            case 1:
+             {
+                printf("Enter number of edges: ");
+                scanf("%d", &edges);
+                printf("Enter edges (u v):\n");
+                for(int i = 0; i < edges; i++)
+                 {
+                    int u, v;
+                    scanf("%d %d", &u, &v);
+                    adjMatrix[u][v] = 1;
+                    adjMatrix[v][u] = 1;
+                    adjList[u][listSize[u]++] = v;
+                    adjList[v][listSize[v]++] = u;
+                }
+                break;
+            }
+            case 2: 
+            {
+                printf("\nAdjacency Matrix:\n");
+                for(int i = 0; i < nodes; i++)
+                 {
+                    for(int j = 0; j < nodes; j++)
+                        printf("%d ", adjMatrix[i][j]);
+                    printf("\n");
+                }
+                break;
+            }
+            case 3:
+             {
+                printf("\nAdjacency List:\n");
+                for(int i = 0; i < nodes; i++) 
+                {
+                    printf("%d -> ", i);
+                    for(int j = 0; j < listSize[i]; j++)
+                        printf("%d ", adjList[i][j]);
+                    printf("\n");
+                }
+                break;
+            }
+            case 4:
+                printf("Exit.\n");
+                break;
+            default:
+                printf(" Choose a valid option. ( Between 1 to 4 )\n");
+        }
+    } 
+    while(choice != 4);
+    for(int i = 0; i < nodes; i++)
+        free(adjList[i]);
+    return 0;
+}
