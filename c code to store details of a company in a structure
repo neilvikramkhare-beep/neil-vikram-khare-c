@@ -1,0 +1,34 @@
+#include <stdio.h>
+struct Company
+{
+    char name[100];
+    char address[200];
+    char phone[20];
+    int number_of_employees;
+};
+int main()
+{
+    struct Company companies[10];  
+    for (int i = 0; i < 10; i++) 
+    {
+        printf("\nEnter details for Company %d:\n", i + 1);
+ printf("Name: ");
+        scanf(" %[^\n]", companies[i].name); 
+        printf("Address: ");
+        scanf(" %[^\n]", companies[i].address);
+        printf("Phone: ");
+        scanf(" %[^\n]", companies[i].phone);
+        printf("Number of Employees: ");
+        scanf("%d", &companies[i].number_of_employees);
+    }
+    printf("\nCompany Details\n");
+    for (int i = 0; i < 10; i++)
+    {
+printf("\nCompany %d:\n", i + 1);
+        printf("Name: %s\n", companies[i].name);
+        printf("Address: %s\n", companies[i].address);
+        printf("Phone: %s\n", companies[i].phone);
+        printf("Number of Employees: %d\n", companies[i].number_of_employees);
+    }
+    return 0;
+}
