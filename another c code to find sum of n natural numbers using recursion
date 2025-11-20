@@ -1,0 +1,15 @@
+#include <stdio.h>
+int sumNatural(int n)
+{
+    if(n==1)
+    return 1;
+    else
+    return n+sumNatural(n-1);
+}
+int main()
+{
+    int n=80;
+    int sum=sumNatural(n);
+    printf("the sum of first natural numbers is:%d\n");
+    return 0;
+}
