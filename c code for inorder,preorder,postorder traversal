@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node{
+    int data;
+    struct Node*left;
+    struct Node*right;
+};
+struct Node*createNode(int data)
+{
+    struct Node*newNode(struct Node*)malloc(sizeof(struct Node));
+    if(newNode==NULL)
+    {
+        printf("memory allocation failed.\n");
+        exit(1);
+    }
+    newNode->data=data;
+    newNode->left=NULL;
+    newNode->right=NULL;
+    return newNode;
+}
+struct Node*insertNode(struct Node*root,int data)
+{
+    if(root== NULL)
+    {
+        return createNode(data);
+    }
+    if(data<root->data)
+    {
+        else if(data>root->data)
+        {
+            root->right=insertNode(root->right,data);
+        }
+        return root;
+    }
+    void inorderTraversal(struct Node*root)
+    {
+        if(root==NULL)
+        {
+            return;
+    }
+    inorderTraversal(root->left)
+    printf("%d",root->data);
+    inorderTraversal(root->right);
+}
+void preorderTraversal(struct Node*root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    printf("%d",root->data);
+    preorderTraverasal(root->left)
+    preorderTraversal(root->right);
+}
+void postorderTraversal(struct Node*root);
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    postorderTraversal(root->left);
+    postorderTraversal(root->right);
+    printf("%d",root->data);
+}
+}
+int main()
+{
+    struct Node*root=NULL;
+    root=insertNode(root,76);
+    insertNode(root,54);
+    insertNode(root,78);
+    insertNode(root,87);
+    insertNode(root,59);
+    insertNode(root,44);
+    insertNode(root,24);
+    insertNode(root,47);
+    insertNode(root,38);
+    insertNode(root,29);
+    printf("inorder Traversal:");
+    inorderTraversal(root);
+    printf("\n");
+    printf("preorder traversal:");
+    preorderTraversal(root);
+    printf("\n");
+    printf("postorder traversal:");
+    postorderTraversal(root);
+    printf("\n");
+    return 0;
+    }
