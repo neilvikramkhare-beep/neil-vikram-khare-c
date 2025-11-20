@@ -1,0 +1,28 @@
+#include <stdio.h>
+int main()
+{
+    int i,index,a[10],key=78;
+    {
+    for(i=0;i<10;i++)
+    {
+        printf("enter elements in ascending order:\n");
+        {
+        scanf("%d",a[i]);
+    }
+    for(i=0;i<10;i++)
+    {
+        if(key==a[i])
+        {
+            index=i;
+        }
+            break;
+        }
+    }
+    printf("element %d found at index%d\n",key,index);
+    
+    {
+        printf("element not found:");
+    }
+    }
+    return 0;
+}
