@@ -1,0 +1,26 @@
+#include <stdio.h>
+#define DAYS_IN_WEEK 7
+int main() 
+{
+    float city1_temp[DAYS_IN_WEEK], city2_temp[DAYS_IN_WEEK];
+    int i;
+    printf("Enter the temperatures for City 1 for 7 days:\n");
+    for(i = 0; i < DAYS_IN_WEEK; i++)
+     {
+        printf("Day %d: ", i + 1);
+        scanf("%f", &city1_temp[i]);
+    }
+    printf("\nEnter the temperatures for City 2 for 7 days:\n");
+    for(i = 0; i < DAYS_IN_WEEK; i++)
+     {
+        printf("Day %d: ", i + 1);
+        scanf("%f", &city2_temp[i]);
+    }
+    printf("\nTemperature Report for the Week:\n");
+    printf("Day\tCity 1\t\tCity 2\n");
+    for(i = 0; i < DAYS_IN_WEEK; i++) 
+    {
+        printf("%d\t%.2f\t\t%.2f\n", i + 1, city1_temp[i], city2_temp[i]);
+    }
+    return 0;
+}
