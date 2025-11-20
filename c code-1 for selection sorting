@@ -1,0 +1,32 @@
+#include<stdio.h>
+int main()
+{
+    int selectionsort(int a[],int n)
+    {
+int i,j,min_idx,temp;
+for(i=0;i<n;i++)
+{
+    min_idx=i;
+    for(j=i+1;j<n;j++)
+    {
+        if(a[j]<a[min_idx])
+        {
+            min_idx=j;
+        }
+    }
+    temp=a[min_idx];
+    a[min_idx]=a[i];
+    a[j]=temp;
+}
+return arr;
+}
+int main()
+{
+    int a[]={34,78,65,76,54};
+    int n=sizeof(a)/sizeof(a[0]);
+    int sorted=selectionsort(a,n);
+    printf("%d,sorted[i]");
+}
+printf("\n");
+return 0;
+}
