@@ -1,0 +1,22 @@
+#include <stdio.h>
+struct Student
+{
+    char book[50];   
+    float price;     
+    int pages;      
+};
+int main() 
+{
+    struct Student s1;
+    printf("Enter the book name: ");
+    fgets(s1.book, sizeof(s1.book), stdin);  
+    printf("Enter the price: ");
+    scanf("%f", &s1.price);
+    printf("Enter the number of pages: ");
+    scanf("%d", &s1.pages);
+    printf("\nBook Details:\n");
+    printf("Book: %s", s1.book);
+    printf("Price: %.2f\n", s1.price);
+    printf("Pages: %d\n", s1.pages);
+    return 0;
+}
