@@ -1,0 +1,22 @@
+#include <stdio.h>
+int main()
+{
+    int srno;
+    int age;
+    char name[10]; 
+    for (int i = 0; i < 5; i++) 
+    { 
+        printf("Enter the data for person %d:\n", i + 1); 
+        printf("Enter the SrNo: ");
+        scanf("%d", &srno);
+        printf("Enter the age: ");
+        scanf("%d", &age); 
+        printf("Enter the name: ");
+        scanf("%s", name); 
+    }
+    printf("SrNo\t",srno);
+    printf("age\t",age);
+    printf("name\t",name);
+    printf("\nDatabase display.\n"); 
+    return 0;
+}
