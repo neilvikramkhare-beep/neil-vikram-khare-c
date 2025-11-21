@@ -1,0 +1,25 @@
+#include<stdio.h>
+int main()
+{
+    int a,b,sum,prod,div,sub;
+    printf("sum=%d,sum");
+    scanf("%d,&sum");
+    {
+    printf("sub=%d,&sub");
+    scanf("%d,&sub");
+    }
+    {
+    printf("prod=%d,&prod");
+    scanf("%d,&prod");
+    }
+    {
+    printf("div=%d,&div");
+    scanf("%d,&div");
+    }
+    sum=a+b;
+    sub=a-b;
+    prod=a*b;
+    div=a\b;
+    printf("%d,&sum,&sub,&prod,&div");
+    return 0;
+}
