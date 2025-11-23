@@ -1,0 +1,20 @@
+#include <stdio.h>
+int main()
+{
+    int i, a[10];
+    int count = 0;
+    printf("Enter 10 integers for the series:\n");
+    for (i = 0; i < 10; i++)
+    {
+        scanf("%d", &a[i]); 
+    }
+    for (i = 0; i < 8; i++)
+    { 
+        if (a[i] == 0 && a[i + 1] == 1 && a[i + 2] == 0) 
+        {
+            count++;
+        }
+    }
+    printf("The number of series '0, 1, 0' present are: %d\n", count);
+    return 0;
+}
