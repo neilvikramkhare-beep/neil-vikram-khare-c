@@ -1,0 +1,15 @@
+#include <stdio.h>
+int main() 
+{
+    int BS;
+    double DA,TA,GS;
+    printf("Enter the BS:");
+    scanf("%d",&BS);
+     DA=0.05*BS;
+     printf("Value of DA:%d",DA);
+     TA=0.15*BS;
+     printf("\nValue of TA:%d",TA);
+     GS=DA+TA+BS;
+     printf("\nValue of GS:%d",GS);
+    return 0;
+}
