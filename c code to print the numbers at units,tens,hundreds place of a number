@@ -1,0 +1,14 @@
+#include <stdio.h>
+int main() 
+{
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    int hundreds = (n / 100) % 10;
+    int tens = (n / 10) % 10;
+    int units = n % 10;
+    printf("The value at hundred's place: %d\n", hundreds);
+    printf("The value at ten's place: %d\n", tens);
+    printf("The value at unit's place: %d\n", units);
+    return 0;
+}
