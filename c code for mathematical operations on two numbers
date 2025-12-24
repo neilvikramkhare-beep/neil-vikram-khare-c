@@ -1,0 +1,17 @@
+#include <stdio.h>
+int main()
+{
+    int a=89;
+    int b=76;
+    int c=a+b;
+    printf("The value of c is:%d",c);
+    int d=a-b;
+    printf("\nThe value of d is:%d",d);
+    int e=a*b;
+    printf("\nThe value of e is:%d",e);
+    int f=a/b;
+    printf("\nThe value of f is:%d",f);
+    int g=a%b;
+    printf("\nThe value of g is:%d",g);
+    return 0;
+}
