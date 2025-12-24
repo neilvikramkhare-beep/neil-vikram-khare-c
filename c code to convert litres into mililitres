@@ -1,0 +1,10 @@
+#include <stdio.h>
+int main()
+{
+    int l;
+  printf("Enter the value in litres:");
+  scanf("%d",&l);
+  int m=l*100;
+  printf("The value in mililitres:%d",m);
+return 0;
+}
