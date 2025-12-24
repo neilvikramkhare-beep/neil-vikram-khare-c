@@ -1,0 +1,23 @@
+#include <stdio.h> 
+int main()
+{ 
+    int n; 
+    int sum = 0; 
+    int i; 
+    printf("Enter a non-negative number: "); 
+    scanf("%d", &n); 
+    if (n < 0) 
+    { 
+        printf("The number entered is negative.\n"); 
+    }
+    else
+    {
+        printf("Given number is: %d\n", n); 
+        for (i = 0; i < n; i++)
+        { 
+            sum = sum + i; 
+        } 
+        printf("The sum of numbers from 0 to %d is: %d\n", n , sum);
+    }
+    return 0; 
+}
