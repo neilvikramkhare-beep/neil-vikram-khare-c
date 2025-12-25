@@ -1,0 +1,34 @@
+#include <stdio.h>
+int main() 
+{
+    int a[] = {64, 25, 12, 22, 11};
+    int n = sizeof(a) / sizeof(a[0]);
+    int i, j, minindex, temp;
+    printf("Original array: ");
+    for (i = 0; i < n; i++) 
+    {
+        printf("%d ", a[i]);
+    }
+   printf("\n");
+    for (i = 0; i < n - 1; i++) 
+    {
+        minindex = i;
+        for (j = i + 1; j < n; j++) 
+        {
+            if (a[j] < a[minindex])
+            {
+                minindex = j;
+            }
+        }
+        temp = a[minindex];
+        a[minindex] = a[i];
+        a[i] = temp;
+    }
+    printf("Sorted array: ");
+    for (i = 0; i < n; i++) 
+    {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+    return 0;
+}
