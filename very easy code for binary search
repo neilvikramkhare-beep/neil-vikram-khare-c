@@ -1,0 +1,38 @@
+#include <stdio.h>
+int binarySearch(int a[], int n, int key) 
+{
+    int low = 0;
+    int high = n - 1;
+    while (low <= high) 
+    {
+        int mid = low + (high - low) / 2;
+        if (a[mid] ==key) 
+        {
+            printf("The position of the key is given below.\n");
+        }
+        if (a[mid] < key)
+        {
+            low = mid + 1;
+        }
+        else 
+        {
+            high = mid - 1;
+        }
+    }
+}
+int main() 
+{
+    int a[] = {2, 5, 10, 18, 23, 28, 33, 40, 55};
+    int n = sizeof(a) / sizeof(a[0]); 
+    int key = 23; 
+    int result = binarySearch(a, n, key);
+    if (result == -1) 
+    {
+        printf("Element not found in the array.\n");
+    }
+    else
+    {
+        printf("Element %d found at index: %d\n", key, result);
+    }
+    return 0;
+}
