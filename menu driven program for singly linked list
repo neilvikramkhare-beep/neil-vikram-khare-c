@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct Node {
     int data;
     struct Node* next;
 } Node;
+
 Node* insertAtBeginning(Node* head, int data);
 Node* insertAtEnd(Node* head, int data);
 Node* insertBefore(Node* head, int target, int data);
@@ -17,12 +19,15 @@ Node* mergeLists(Node* head1, Node* head2);
 int countNodes(Node* head);
 void displayList(Node* head);
 void freeList(Node* head);
+
 int main() {
     Node* head1 = NULL;
     Node* head2 = NULL;
     Node* mergedHead = NULL;
     int choice, data, target, pos;
+
     printf("Menu Driven Program for Singly Linked List\n");
+
     do {
         printf("\n--- Main Menu ---\n");
         printf("1. Insert at beginning\n");
@@ -40,6 +45,7 @@ int main() {
         printf("0. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+
         switch(choice) {
             case 1:
                 printf("Enter data to insert at beginning: ");
@@ -98,7 +104,8 @@ int main() {
                 freeList(head1);
                 head1 = NULL;
                 printf("Enter number of nodes: ");
-                int n1; scanf("%d", &n1);
+                int n1;
+                scanf("%d", &n1);
                 for(int i=0; i<n1; i++) {
                     printf("Enter data for node %d: ", i+1);
                     scanf("%d", &data);
@@ -108,7 +115,8 @@ int main() {
                 freeList(head2);
                 head2 = NULL;
                 printf("Enter number of nodes: ");
-                int n2; scanf("%d", &n2);
+                int n2;
+                scanf("%d", &n2);
                 for(int i=0; i<n2; i++) {
                     printf("Enter data for node %d: ", i+1);
                     scanf("%d", &data);
@@ -117,29 +125,34 @@ int main() {
                 mergedHead = mergeLists(head1, head2);
                 printf("Merged list is: ");
                 displayList(mergedHead);
-                freeList(head1);
-                freeList(head2);
-                head1 = mergedHead;
+                // Note: The original logic here reassigns head1 and frees the others
+                // You should manage memory carefully to avoid double frees or leaks.
+                // For this error correction, we fix the function call and let the main handle the logic.
+                head1 = mergedHead; 
+                // head2 and mergedHead are now part of head1, so don't free them separately here.
                 head2 = NULL;
                 mergedHead = NULL;
-break;
- case 12:
+                break;
+            case 12:
                 printf("Current list: ");
                 displayList(head1);
                 break;
-case 0:
+            case 0:
                 printf("Exiting program...\n");
                 break;
- default:
+            default:
                 printf("Invalid choice. Try again.\n");
         }
-    } 
-    while(choice != 0);
+    } while(choice != 0);
+
+    // Free all remaining memory on exit
     freeList(head1);
-    freeList(head2);
-    freeList(mergedHead);
+    // freeList(head2); // head2 is NULL or part of head1, no need to free again
+    // freeList(mergedHead); // mergedHead is NULL or part of head1, no need to free again
+
     return 0;
 }
+
 Node* insertAtBeginning(Node* head, int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if(!newNode) {
@@ -150,237 +163,245 @@ Node* insertAtBeginning(Node* head, int data) {
     newNode->next = head;
     return newNode;
 }
+
 Node* insertAtEnd(Node* head, int data) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    if(!newNode) 
-    {
-        printf("Memory allocation failed\n");
-        return head;
-    }
-    newNode->data = data;
-    newNode->next = NULL;
-    if(head == NULL) 
-    {
-        return newNode;
-    }
-    Node* temp = head;
-    while(temp->next != NULL)
-        temp = temp->next;
-    temp->next = newNode;
-    return head;
-}
-Node* insertBefore(Node* head, int target, int data) 
-{
-    if(head == NULL) 
-    {
-        printf("List is empty.\n");
-        return head;
-    }
-    if(head->data == target)
-     {
-        return insertAtBeginning(head, data);
-    }
-    Node* prev = NULL;
-    Node* curr = head;
-    while(curr != NULL && curr->data != target) {
-        prev = curr;
-        curr = curr->next;
-    }
-    if(curr == NULL) {
-        printf("Target %d not found.\n", target);
-        return head;
-    }
     Node* newNode = (Node*)malloc(sizeof(Node));
     if(!newNode) {
         printf("Memory allocation failed\n");
         return head;
     }
     newNode->data = data;
+    newNode->next = NULL;
+
+    if(head == NULL) {
+        return newNode;
+    }
+
+    Node* temp = head;
+    while(temp->next != NULL)
+        temp = temp->next;
+    
+    temp->next = newNode;
+    return head;
+}
+
+Node* insertBefore(Node* head, int target, int data) {
+    if(head == NULL) {
+        printf("List is empty.\n");
+        return head;
+    }
+
+    if(head->data == target) {
+        return insertAtBeginning(head, data);
+    }
+
+    Node* prev = NULL;
+    Node* curr = head;
+    while(curr != NULL && curr->data != target) {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    if(curr == NULL) {
+        printf("Target %d not found.\n", target);
+        return head;
+    }
+
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if(!newNode) {
+        printf("Memory allocation failed\n");
+        return head;
+    }
+
+    newNode->data = data;
     newNode->next = curr;
     prev->next = newNode;
     return head;
 }
-Node* insertAfter(Node* head, int target, int data) 
-{
+
+Node* insertAfter(Node* head, int target, int data) {
     Node* curr = head;
     while(curr != NULL && curr->data != target) {
         curr = curr->next;
     }
-    if(curr == NULL) 
-    {
+
+    if(curr == NULL) {
         printf("Target %d not found.\n", target);
         return head;
     }
+
     Node* newNode = (Node*)malloc(sizeof(Node));
-    if(!newNode) 
-    {
+    if(!newNode) {
         printf("Memory allocation failed\n");
         return head;
     }
+
     newNode->data = data;
     newNode->next = curr->next;
     curr->next = newNode;
     return head;
 }
-Node* deleteFromBeginning(Node* head)
- {
-    if(head == NULL)
-     {
+
+Node* deleteFromBeginning(Node* head) {
+    if(head == NULL) {
         printf("List is empty.\n");
         return NULL;
     }
+
     Node* temp = head;
     head = head->next;
     printf("Deleted node with data %d\n", temp->data);
     free(temp);
     return head;
 }
+
 Node* deleteFromEnd(Node* head) {
     if(head == NULL) {
         printf("List is empty.\n");
         return NULL;
     }
+
     if(head->next == NULL) {
         printf("Deleted node with data %d\n", head->data);
         free(head);
         return NULL;
     }
+
     Node* temp = head;
     Node* prev = NULL;
-    while(temp->next != NULL) 
-    {
+    while(temp->next != NULL) {
         prev = temp;
         temp = temp->next;
     }
+
     prev->next = NULL;
     printf("Deleted node with data %d\n", temp->data);
     free(temp);
     return head;
 }
-Node* deleteBefore(Node* head, int target)
- {
-    if(head == NULL || head->next == NULL) 
-    {
+
+Node* deleteBefore(Node* head, int target) {
+    if(head == NULL || head->next == NULL) {
         printf("Not enough nodes to delete before %d\n", target);
         return head;
     }
-    if(head->data == target) 
-    {
+
+    if(head->data == target) {
         printf("No node exists before the first node.\n");
         return head;
     }
+
     Node* prev = NULL;
     Node* curr = head;
     Node* next = head->next;
-    if(next->data == target) 
-    {
+
+    if(next->data == target) {
         printf("Deleted node with data %d\n", head->data);
         head = next;
         free(curr);
         return head;
     }
-    while(next != NULL && next->data != target) 
-    {
+
+    while(next != NULL && next->data != target) {
         prev = curr;
         curr = next;
         next = next->next;
     }
-    if(next == NULL) 
-    {
+
+    if(next == NULL) {
         printf("Target %d not found.\n", target);
         return head;
     }
-    if(prev == NULL) 
-    {
-        printf("No node exists before target.\n");
-        return head;
-    }
+
+    // No need for 'if(prev == NULL)' check here because we already handled 
+    // the case where the second node is the target, meaning prev wouldn't be NULL otherwise.
+
     prev->next = curr->next;
     printf("Deleted node with data %d\n", curr->data);
     free(curr);
     return head;
 }
-Node* deleteAfter(Node* head, int target) 
-{
+
+Node* deleteAfter(Node* head, int target) {
     Node* curr = head;
-    while(curr != NULL && curr->data != target)
-     {
+    while(curr != NULL && curr->data != target) {
         curr = curr->next;
     }
-    if(curr == NULL)
-     {
+
+    if(curr == NULL) {
         printf("Target %d not found.\n", target);
         return head;
     }
-    if(curr->next == NULL) 
-    {
+
+    if(curr->next == NULL) {
         printf("No node exists after the target node.\n");
         return head;
     }
+
     Node* temp = curr->next;
     curr->next = temp->next;
     printf("Deleted node with data %d\n", temp->data);
     free(temp);
     return head;
 }
-int searchNode(Node* head, int target)
- {
+
+int searchNode(Node* head, int target) {
     int pos = 1;
     Node* curr = head;
-    while(curr != NULL)
-     {
-        if(curr->data == target) return pos;
+    while(curr != NULL) {
+        if(curr->data == target)
+            return pos;
         curr = curr->next;
         pos++;
     }
     return -1;
 }
-Node* mergeLists(Node* head1, Node* head2)
- {
+
+Node* mergeLists(Node* head1, Node* head2) {
     if(head1 == NULL) return head2;
     if(head2 == NULL) return head1;
- Node* temp = head1;
+
+    Node* temp = head1;
     while(temp->next != NULL)
         temp = temp->next;
+    
     temp->next = head2;
     return head1;
 }
-int countNodes(Node* head) 
-{
+
+int countNodes(Node* head) {
     int count = 0;
     Node* curr = head;
-    while(curr != NULL) 
-    {
+    while(curr != NULL) {
         count++;
         curr = curr->next;
     }
     return count;
 }
-void displayList(Node* head) 
-{
-    if(head == NULL)
-     {
+
+void displayList(Node* head) {
+    if(head == NULL) {
         printf("List is empty.\n");
         return;
     }
+
     Node* curr = head;
-    while(curr != NULL)
-     {
+    while(curr != NULL) {
         printf("%d -> ", curr->data);
         curr = curr->next;
     }
     printf("NULL\n");
 }
-void freeList(Node* head)
- {
+
+void freeList(Node* head) {
     Node* temp;
-    while(head != NULL) 
-    {
+    while(head != NULL) {
         temp = head;
         head = head->next;
         free(temp);
     }
-    printf("after deletion:\n");
-    displaylist(head);
-    return 0;
+    // Corrected function name
+    printf("After deletion:\n");
+    displayList(head); 
+    // The function is void, so 'return 0;' is invalid
 }
