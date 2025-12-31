@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node {
+typedef struct Node 
+{
     int data;
     struct Node* next;
 } Node;
-
 Node* insertAtBeginning(Node* head, int data);
 Node* insertAtEnd(Node* head, int data);
 Node* insertBefore(Node* head, int target, int data);
@@ -19,17 +18,16 @@ Node* mergeLists(Node* head1, Node* head2);
 int countNodes(Node* head);
 void displayList(Node* head);
 void freeList(Node* head);
-
-int main() {
+int main() 
+{
     Node* head1 = NULL;
     Node* head2 = NULL;
     Node* mergedHead = NULL;
     int choice, data, target, pos;
-
     printf("Menu Driven Program for Singly Linked List\n");
-
-    do {
-        printf("\n--- Main Menu ---\n");
+    do
+{
+        printf("\nMain Menu\n");
         printf("1. Insert at beginning\n");
         printf("2. Insert at end\n");
         printf("3. Insert before a number\n");
@@ -45,8 +43,8 @@ int main() {
         printf("0. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-
-        switch(choice) {
+        switch(choice) 
+{
             case 1:
                 printf("Enter data to insert at beginning: ");
                 scanf("%d", &data);
@@ -106,7 +104,8 @@ int main() {
                 printf("Enter number of nodes: ");
                 int n1;
                 scanf("%d", &n1);
-                for(int i=0; i<n1; i++) {
+                for(int i=0; i<n1; i++) 
+{
                     printf("Enter data for node %d: ", i+1);
                     scanf("%d", &data);
                     head1 = insertAtEnd(head1, data);
@@ -117,7 +116,8 @@ int main() {
                 printf("Enter number of nodes: ");
                 int n2;
                 scanf("%d", &n2);
-                for(int i=0; i<n2; i++) {
+                for(int i=0; i<n2; i++)
+{
                     printf("Enter data for node %d: ", i+1);
                     scanf("%d", &data);
                     head2 = insertAtEnd(head2, data);
@@ -143,16 +143,11 @@ int main() {
             default:
                 printf("Invalid choice. Try again.\n");
         }
-    } while(choice != 0);
-
-    // Free all remaining memory on exit
+    } 
+while(choice != 0);
     freeList(head1);
-    // freeList(head2); // head2 is NULL or part of head1, no need to free again
-    // freeList(mergedHead); // mergedHead is NULL or part of head1, no need to free again
-
     return 0;
 }
-
 Node* insertAtBeginning(Node* head, int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if(!newNode) {
@@ -163,7 +158,6 @@ Node* insertAtBeginning(Node* head, int data) {
     newNode->next = head;
     return newNode;
 }
-
 Node* insertAtEnd(Node* head, int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if(!newNode) {
@@ -172,26 +166,25 @@ Node* insertAtEnd(Node* head, int data) {
     }
     newNode->data = data;
     newNode->next = NULL;
-
-    if(head == NULL) {
+    if(head == NULL)
+{
         return newNode;
     }
-
     Node* temp = head;
     while(temp->next != NULL)
         temp = temp->next;
-    
     temp->next = newNode;
     return head;
 }
-
-Node* insertBefore(Node* head, int target, int data) {
-    if(head == NULL) {
+Node* insertBefore(Node* head, int target, int data)
+{
+    if(head == NULL) 
+{
         printf("List is empty.\n");
         return head;
     }
-
-    if(head->data == target) {
+    if(head->data == target) 
+{
         return insertAtBeginning(head, data);
     }
 
@@ -312,10 +305,6 @@ Node* deleteBefore(Node* head, int target) {
         printf("Target %d not found.\n", target);
         return head;
     }
-
-    // No need for 'if(prev == NULL)' check here because we already handled 
-    // the case where the second node is the target, meaning prev wouldn't be NULL otherwise.
-
     prev->next = curr->next;
     printf("Deleted node with data %d\n", curr->data);
     free(curr);
@@ -400,8 +389,6 @@ void freeList(Node* head) {
         head = head->next;
         free(temp);
     }
-    // Corrected function name
     printf("After deletion:\n");
     displayList(head); 
-    // The function is void, so 'return 0;' is invalid
 }
