@@ -5,8 +5,17 @@ struct node {
     struct node *prev, *next;
 };
 struct node* start = NULL;
-void traverse()
-{
+struct node* start2 = NULL; 
+void traverse();
+void insertAtFront();
+void insertAtEnd();
+void insertAtPosition();
+void deleteFirst();
+void deleteEnd();
+void deletePosition();
+int countNodes(struct node* head);
+struct node* mergeLists(struct node* head1, struct node* head2);
+void traverse() {
     if (start == NULL) {
         printf("\nList is empty\n");
         return;
@@ -18,8 +27,7 @@ void traverse()
         temp = temp->next;
     }
 }
-void insertAtFront()
-{
+void insertAtFront() {
     int data;
     struct node* temp;
     temp = (struct node*)malloc(sizeof(struct node));
@@ -28,10 +36,12 @@ void insertAtFront()
     temp->info = data;
     temp->prev = NULL;
     temp->next = start;
+    if (start != NULL) { 
+        start->prev = temp;
+    }
     start = temp;
 }
-void insertAtEnd()
-{
+void insertAtEnd() {
     int data;
     struct node *temp, *trav;
     temp = (struct node*)malloc(sizeof(struct node));
@@ -43,159 +53,206 @@ void insertAtEnd()
     temp->next = NULL;
     trav = start;
     if (start == NULL) {
-
         start = temp;
-    }
-    else {
-        while (trav->next != NULL)
+    } else {
+        while (trav->next != NULL) {
             trav = trav->next;
+        }
         temp->prev = trav;
         trav->next = temp;
     }
 }
-void insertAtPosition()
-{
+void insertAtPosition() {
     int data, pos, i = 1;
     struct node *temp, *newnode;
     newnode = malloc(sizeof(struct node));
     newnode->next = NULL;
     newnode->prev = NULL;
-
-    // Enter the position and data
     printf("\nEnter position : ");
     scanf("%d", &pos);
-    
-
-    // If start==NULL,
     if (start == NULL) {
-        start = newnode;
-        newnode->prev = NULL;
-        newnode->next = NULL;
-    }
-    else if (pos == 1) 
-    {
-      insertAtFront();
-    }
-    else {
-      printf("\nEnter number to be inserted: ");
-    scanf("%d", &data);
-    newnode->info = data;
-    temp = start;
-        while (i < pos - 1) {
+        if (pos == 1) {
+            printf("\nEnter number to be inserted: ");
+            scanf("%d", &data);
+            newnode->info = data;
+            start = newnode;
+        } else {
+            printf("\nPosition out of range for an empty list.\n");
+            free(newnode);
+        }
+        return;
+    } else if (pos == 1) {
+        free(newnode);
+        insertAtFront();
+    } else {
+        printf("\nEnter number to be inserted: ");
+        scanf("%d", &data);
+        newnode->info = data;
+        temp = start;
+        while (i < pos - 1 && temp->next != NULL) {
             temp = temp->next;
             i++;
+        }
+        if (i != pos - 1) {
+             printf("\nPosition out of range.\n");
+             free(newnode);
+             return;
         }
         newnode->next = temp->next;
         newnode->prev = temp;
+        if (temp->next != NULL) {
+            temp->next->prev = newnode;
+        }
         temp->next = newnode;
-        temp->next->prev = newnode;
     }
 }
-void deleteFirst()
-{
+void deleteFirst() {
     struct node* temp;
-    if (start == NULL)
+    if (start == NULL) {
         printf("\nList is empty\n");
-    else {
+    } else {
         temp = start;
         start = start->next;
-        if (start != NULL)
+        if (start != NULL) {
             start->prev = NULL;
+        }
         free(temp);
     }
 }
-void deleteEnd()
-{
+void deleteEnd() {
     struct node* temp;
-    if (start == NULL)
+    if (start == NULL) {
         printf("\nList is empty\n");
-    temp = start;
-    while (temp->next != NULL)
-        temp = temp->next;
-    if (start->next == NULL)
-        start = NULL;
-    else {
-        temp->prev->next = NULL;
-        free(temp);
+        return;
     }
+    temp = start;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    if (start->next == NULL) { 
+        start = NULL;
+    } else {
+        temp->prev->next = NULL;
+    }
+    free(temp);
 }
-void deletePosition()
-{
+void deletePosition() {
     int pos, i = 1;
     struct node *temp, *position;
-    temp = start;
-    if (start == NULL)
+
+    if (start == NULL) {
         printf("\nList is empty\n");
-    else {
-        printf("\nEnter position : ");
-        scanf("%d", &pos);
-        if (pos == 1) {
-            deleteFirst(); 
-            if (start != NULL) {
-                start->prev = NULL;
-            }
-            free(position);
-            return;
-        }
-        while (i < pos - 1) {
-            temp = temp->next;
-            i++;
-        }
-        position = temp->next;
-        if (position->next != NULL)
-            position->next->prev = temp;
-        temp->next = position->next;
-        free(position);
+        return;
     }
+    printf("\nEnter position : ");
+    scanf("%d", &pos);
+    if (pos == 1) {
+        deleteFirst();
+        return;
+    }
+    temp = start;
+    while (i < pos - 1 && temp->next != NULL) {
+        temp = temp->next;
+        i++;
+    }
+    if (i != pos - 1 || temp->next == NULL) {
+        printf("\nPosition out of range.\n");
+        return;
+    }
+    position = temp->next;
+    temp->next = position->next;
+    if (position->next != NULL) {
+        position->next->prev = temp;
+    }
+    free(position);
 }
-int main()
-{
+int countNodes(struct node* head) {
+    int count = 0;
+    struct node* current = head;
+    while (current != NULL) {
+        count++;
+        current = current->next;
+    }
+    return count;
+}
+struct node* mergeLists(struct node* head1, struct node* head2) {
+    if (head1 == NULL) {
+        return head2;
+    }
+    if (head2 == NULL) {
+        return head1;
+    }
+    struct node* temp = head1;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = head2;
+    head2->prev = temp;
+    return head1;
+}
+int main() {
     int choice;
+    struct node* newNode1 = (struct node*)malloc(sizeof(struct node));
+    newNode1->info = 100; newNode1->prev = NULL; newNode1->next = NULL;
+    struct node* newNode2 = (struct node*)malloc(sizeof(struct node));
+    newNode2->info = 200; newNode2->prev = newNode1; newNode2->next = NULL;
+    newNode1->next = newNode2;
+    start2 = newNode1;
+    printf("A second list has been created for merging purposes (contains 100, 200).\n");
     while (1) {
-        printf("\n\t1  To see list\n");
-        printf("\t2  For insertion at"
-               " starting\n");
-        printf("\t3  For insertion at"
-               " end\n");
-        printf("\t4  For insertion at "
-               "any position\n");
-        printf("\t5  For deletion of "
-               "first element\n");
-        printf("\t6  For deletion of "
-               "last element\n");
-        printf("\t7  For deletion of "
-               "element at any position\n");
+        printf("\nDoubly Linked List Menu\n");
+        printf("\t1 To see list (start pointer)\n");
+        printf("\t2 For insertion at starting\n");
+        printf("\t3 For insertion at end\n");
+        printf("\t4 For insertion at any position\n");
+        printf("\t5 For deletion of first element\n");
+        printf("\t6 For deletion of last element\n");
+        printf("\t7 For deletion of element at any position\n");
         printf("\t8 To exit\n");
+        printf("\t9 To count nodes in the list\n");
+        printf("\t10 To merge the current list with a pre-made second list\n");
         printf("\nEnter Choice :\n");
         scanf("%d", &choice);
+
         switch (choice) {
-        case 1:
-            traverse();
-            break;
-        case 2:
-            insertAtFront();
-            break;
-        case 3:
-            insertAtEnd();
-            break;
-        case 4:
-            insertAtPosition();
-            break;
-        case 5:
-            deleteFirst();
-            break;
-        case 6:
-            deleteEnd();
-            break;
-        case 7:
-            deletePosition();
-            break;
-        case 8:
-            exit(1);
-            break;
-        default:
-            printf("Incorrect Choice. Try Again \n");
-            continue;
+            case 1:
+                traverse();
+                break;
+            case 2:
+                insertAtFront();
+                break;
+            case 3:
+                insertAtEnd();
+                break;
+            case 4:
+                insertAtPosition();
+                break;
+            case 5:
+                deleteFirst();
+                break;
+            case 6:
+                deleteEnd();
+                break;
+            case 7:
+                deletePosition();
+                break;
+            case 8:
+                exit(1);
+                break;
+            case 9: { 
+                int count = countNodes(start);
+                printf("\nThe number of nodes in the list is: %d\n", count);
+                break;
+            }
+            case 10: {
+                start = mergeLists(start, start2);
+                start2 = NULL; 
+                printf("\nList merged successfully. The second list elements are now part of the first list.\n");
+                break;
+            }
+            default:
+                printf("Incorrect Choice. Try Again \n");
+                continue;
         }
     }
     return 0;
