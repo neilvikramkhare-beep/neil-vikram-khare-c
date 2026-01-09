@@ -1,0 +1,14 @@
+#include <stdio.h>
+int main() 
+{
+    int h;
+    int s;
+    int ts;
+    printf("Enter the number of hours worked: ");
+    scanf("%d", &h);
+    printf("Enter the salary per hour: ");
+    scanf("%d", &s);
+    ts=h*s;
+    printf("Total salary paid:%d",ts);
+    return 0;
+}
