@@ -1,0 +1,24 @@
+#include <stdio.h>
+int main() 
+{
+    int g;
+    int m;
+    int n;
+    printf("Enter the angle-1: ");
+    scanf("%d", &g);
+    printf("Enter the angle-2: ");
+    scanf("%d", &m);
+    printf("Enter the angle-3: ");
+    scanf("%d", &n);
+    int sum = g + m + n;
+    printf("Sum of angles of the triangle is: %d", sum);
+    if (sum == 180) 
+    {
+        printf("\nThe given figure is a triangle.\n");
+    } 
+    else
+    {
+        printf("\nThe given figure is not a triangle.");
+    }
+    return 0;
+}
