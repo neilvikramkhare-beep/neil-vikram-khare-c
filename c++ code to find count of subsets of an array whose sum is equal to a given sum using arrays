@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+int countSubsetsRecursive(int a[], int n, int i, int remainingSum) 
+{
+    if (i == n) {
+        if (remainingSum == 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    int countExclude = countSubsetsRecursive(arr, n, i + 1, remainingSum);
+    int countInclude = 0;
+    if (remainingSum >= a[i]) {
+        countInclude = countSubsetsRecursive(a, n, i + 1, remainingSum - a[i]);
+    }
+    return countExclude + countInclude;
+}
+int main() 
+{
+    int a[] = {1, 2, 3, 3};
+    int targetSum = 6;
+    int n = sizeof(a) / sizeof(a[0]);
+    int totalSubsets = countSubsetsRecursive(a, n, 0, targetSum);
+    cout << "Total number of subsets with sum " << targetSum << " = " << totalSubsets << endl;
+    return 0;
+}
